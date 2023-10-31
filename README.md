@@ -11,3 +11,6 @@ You will need Docker installed to run this application.
 docker compose up
 ```
 This will spawn the necessary containers and the application will be available on port 5000.
+
+### Credits
+Copyright &copy; 2023 [Cillian Collins](https://github.com/Cillian-Collins)
