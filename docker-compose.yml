@@ -1,0 +1,7 @@
+services:
+  server:
+    build:
+      context: server
+    image: thorium-server:latest
+    ports:
+      - "5000:5000"
