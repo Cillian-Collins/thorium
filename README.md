@@ -1,9 +1,8 @@
 <h1 align="center">
-    <img src="logo.png" width="200px">
+    <img src="logo.png" width="200px" alt="Thorium">
+    <br>
+    <span>Thorium</span>
 </h1>
-<div align="center">
-    <h2>Thorium</h2>
-</div>
 <div align="center">Thorium is an exploit manager for Attack/Defence CTF competitions.</div>
 
 ### Getting Started
