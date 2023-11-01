@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thorium</title>
+    <!-- Include Bootstrap CSS and Font Awesome via CDNs -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand d-flex align-items-center" href="/"> <!-- Set the root URL to / -->
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Thorium Logo" height="40">
+            <span class="mx-2">Thorium</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item {% if active_page == 'submissions' %}active{% endif %}">
+                    <a class="nav-link" href="/submissions">
+                        <i class="fas fa-file-alt"></i> Submissions
+                    </a>
+                </li>
+                <li class="nav-item {% if active_page == 'services' %}active{% endif %}">
+                    <a class="nav-link" href="/services">
+                        <i class="fas fa-cogs"></i> Services
+                    </a>
+                </li>
+                <li class="nav-item {% if active_page == 'exploits' %}active{% endif %}">
+                    <a class="nav-link" href="/exploits">
+                        <i class="fas fa-bug"></i> Exploits
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container flex-grow-1">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Include Bootstrap JS via a CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <footer class="text-center mt-4">
+        &copy; 2023 <a href="https://github.com/Cillian-Collins/thorium" target="_blank">Thorium</a>
+    </footer>
+
+    <script>
+        // JavaScript to determine the active page and apply the 'active' class
+        const path = window.location.pathname;
+        const navItems = document.querySelectorAll('.navbar-nav .nav-item');
+
+        navItems.forEach((item) => {
+            const link = item.querySelector('.nav-link');
+            if (link && (link.getAttribute('href') === path || (path === '/' && link.getAttribute('href') === '/'))) {
+                item.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

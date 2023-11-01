@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="logo.png" width="200px" alt="Thorium">
+    <img src="server/static/images/logo.png" width="200px" alt="Thorium">
     <br>
     <span>Thorium</span>
 </h1>
