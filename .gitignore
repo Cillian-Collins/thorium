@@ -1,4 +1,4 @@
 .idea/
 database.db
 *.pyc
-exploits/
+exploits/*.py
