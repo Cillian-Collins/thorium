@@ -21,7 +21,7 @@ def exploit(ip, extra):
 ```
 This is where `ip` is the IP address of the target and `extra` is the extra information being passed in (usually some JSON containing flag ids).
 
-You must always print the flags which you find the runner will regex match valid flags from stdout and submit them.
+Simply print the flags found and the runner will regex match valid flags from stdout and submit them.
 
 ### Credits
 Copyright &copy; 2023 [Cillian Collins](https://github.com/Cillian-Collins)
