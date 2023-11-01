@@ -28,7 +28,7 @@ def add_exploit():
         local = threading.local()
 
         if not hasattr(local, "conn"):
-            local.conn = sqlite3.connect('database.db')
+            local.conn = sqlite3.connect('/database/database.db')
 
         insert_exploit(filename, True)
 

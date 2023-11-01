@@ -1,4 +1,4 @@
 .idea/
-database.db
+shared/database/database.db
 *.pyc
-exploits/*.py
+shared/exploits/*.py

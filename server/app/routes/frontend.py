@@ -17,7 +17,7 @@ def submissions():
     local = threading.local()
 
     if not hasattr(local, "conn"):
-        local.conn = sqlite3.connect('database.db')
+        local.conn = sqlite3.connect('/database/database.db')
 
     items = fetch_submissions()
     return render_template("submissions.html", submissions=items)
@@ -33,7 +33,7 @@ def exploits():
     local = threading.local()
 
     if not hasattr(local, "conn"):
-        local.conn = sqlite3.connect('database.db')
+        local.conn = sqlite3.connect('/database/database.db')
 
     items = fetch_exploits()
     return render_template("exploits.html", exploits=items)

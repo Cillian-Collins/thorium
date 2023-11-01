@@ -3,7 +3,7 @@ import os
 
 
 def setup_database():
-    database_file = 'database.db'
+    database_file = '/database/database.db'
 
     if not os.path.exists(database_file):
         conn = sqlite3.connect(database_file)
@@ -32,7 +32,7 @@ def setup_database():
 
 def fetch_exploits():
     # Create a new database connection for this thread
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('/database/database.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM exploits")
     items = cursor.fetchall()
@@ -46,7 +46,7 @@ def fetch_exploits():
 
 def fetch_submissions():
     # Create a new database connection for this thread
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('/database/database.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM submissions")
     items = cursor.fetchall()
@@ -60,7 +60,7 @@ def fetch_submissions():
 
 def insert_exploit(name, active):
     # Create a new database connection for this thread
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('/database/database.db')
     cursor = conn.cursor()
     cursor.execute('INSERT INTO exploits (name, active) VALUES (?, ?)', (name, active))
 
