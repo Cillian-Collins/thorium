@@ -2,7 +2,45 @@
 
 {% block content %}
 <div class="container">
-    <h1>Submissions</h1>
-    <!-- Add your dashboard content here -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="my-0">Submissions</h1>
+    </div>
+    <table class="table mx-auto">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Flag</th>
+                <th>Status</th>
+                <th>Script</th>
+                <th>Service</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if submissions %}
+                {% for submission in submissions %}
+                    <tr>
+                        <td>{{ submission[0] }}</td>
+                        <td>{{ submission[1] }}</td>
+                        <td>
+                            {% if submission[2] == 'OK' %}
+                                <strong><span style="color: green;">{{ submission[2] }}</span></strong>
+                            {% elif submission[2] in ['DUP', 'OWN'] %}
+                                <strong><span style="color: orange;">{{ submission[2] }}</span></strong>
+                            {% else %}
+                                <strong><span style="color: red;">{{ submission[2] }}</span></strong>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ submission[3] }}</td>
+                        <td>{{ submission[4] }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No submissions available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
