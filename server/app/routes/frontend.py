@@ -37,3 +37,8 @@ def exploits():
 
     items = fetch_exploits()
     return render_template("exploits.html", exploits=items)
+
+
+@frontend.route('/exploits/add')
+def add_exploit():
+    return render_template("add_exploit.html")

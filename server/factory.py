@@ -9,6 +9,6 @@ def create_app():
     setup_database()
 
     app.register_blueprint(frontend)
-    app.register_blueprint(api)
+    app.register_blueprint(api, url_prefix='/api')
 
     return app

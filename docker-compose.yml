@@ -5,3 +5,11 @@ services:
     image: thorium-server:latest
     ports:
       - "5000:5000"
+    volumes:
+      - ${EXPLOITS_DIR}:/exploits:rw
+  redis:
+    image: redis:7.2.0-alpine
+    restart: unless-stopped
+    command: [ "redis-server", "--appendonly", "yes" ]
+    ports:
+      - "6379:6379"
