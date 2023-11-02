@@ -107,16 +107,12 @@ def view_exploit(exploit_id):
     if not exploit_name:
         return abort(404)
 
-    # Define the path to the exploit file
     exploit_file_path = f"/exploits/{exploit_name}"
 
-    # Check if the file exists
     if os.path.isfile(exploit_file_path):
-        # If the file exists, read its content
         with open(exploit_file_path, "r") as exploit_file:
             exploit_content = exploit_file.read()
     else:
-        # If the file doesn't exist, set the content to an error message or handle it as needed
         exploit_content = "Exploit content not found."
 
     return render_template(

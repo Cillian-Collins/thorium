@@ -7,8 +7,6 @@ import threading
 
 
 def main():
-    print("Connecting to Redis")
-    # Connect to the Redis server
     cache = redis.StrictRedis(host="redis", port=6379)
 
     p = connect()

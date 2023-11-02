@@ -20,16 +20,14 @@ def setup_database():
             ">= 0 AND port <= 65535))"
         )
 
-        conn.commit()  # Commit the changes to the database
+        conn.commit()
         conn.close()
 
-    # If the database file already exists, just connect to it
     conn = sqlite3.connect(database_file)
     return conn
 
 
 def fetch_exploits():
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -37,7 +35,6 @@ def fetch_exploits():
     )
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 
@@ -45,7 +42,6 @@ def fetch_exploits():
 
 
 def fetch_exploit_by_id(exploit_id):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -54,7 +50,6 @@ def fetch_exploit_by_id(exploit_id):
     )
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 
@@ -62,13 +57,11 @@ def fetch_exploit_by_id(exploit_id):
 
 
 def fetch_exploits_by_service(service_id):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM exploits WHERE service = ?", (service_id,))
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 
@@ -76,13 +69,11 @@ def fetch_exploits_by_service(service_id):
 
 
 def fetch_services():
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM services")
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 
@@ -90,13 +81,11 @@ def fetch_services():
 
 
 def fetch_exploit_name_by_id(exploit_id):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM exploits WHERE id = ?", (exploit_id,))
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 
@@ -125,10 +114,8 @@ def fetch_paginated_submissions(page, per_page):
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
 
-    # Calculate the offset based on the page number and per_page count.
     offset = (page - 1) * per_page
 
-    # Query the database to fetch the desired submissions.
     cursor.execute(
         "SELECT id, flag, status, target, script, (SELECT name FROM services WHERE id = service) FROM "
         "submissions ORDER BY id DESC LIMIT ? OFFSET ?",
@@ -141,7 +128,6 @@ def fetch_paginated_submissions(page, per_page):
 
 
 def insert_exploit(name, service, active):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -149,64 +135,54 @@ def insert_exploit(name, service, active):
         (name, service, active),
     )
 
-    # Close the cursor and connection within this thread
     conn.commit()
     cursor.close()
     conn.close()
 
 
 def insert_service(name, port):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("INSERT INTO services (name, port) VALUES (?, ?)", (name, port))
 
-    # Close the cursor and connection within this thread
     conn.commit()
     cursor.close()
     conn.close()
 
 
 def remove_service(service_id):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM services WHERE id = ?", (service_id,))
 
-    # Close the cursor and connection within this thread
     conn.commit()
     cursor.close()
     conn.close()
 
 
 def disable_exploit(exploit_id):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute(
         "UPDATE exploits SET active = NOT active WHERE id = ?", (exploit_id,)
     )
 
-    # Close the cursor and connection within this thread
     conn.commit()
     cursor.close()
     conn.close()
 
 
 def remove_exploit(exploit_id):
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM exploits WHERE id = ?", (exploit_id,))
 
-    # Close the cursor and connection within this thread
     conn.commit()
     cursor.close()
     conn.close()
 
 
 def fetch_exploits_breakdown():
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -215,7 +191,6 @@ def fetch_exploits_breakdown():
     )
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 
@@ -223,7 +198,6 @@ def fetch_exploits_breakdown():
 
 
 def fetch_submissions_breakdown():
-    # Create a new database connection for this thread
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -234,7 +208,6 @@ def fetch_submissions_breakdown():
     )
     items = cursor.fetchall()
 
-    # Close the cursor and connection within this thread
     cursor.close()
     conn.close()
 

@@ -2,10 +2,8 @@
 <html>
 <head>
     <title>Thorium</title>
-    <!-- Include Bootstrap CSS and Font Awesome via CDNs -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <!-- Include Prism for Python code parsing -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-python.min.js"></script>
@@ -18,7 +16,7 @@
 </head>
 <body class="d-flex flex-column">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand d-flex align-items-center" href="/"> <!-- Set the root URL to / -->
+        <a class="navbar-brand d-flex align-items-center" href="/">
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Thorium Logo" height="40">
             <span class="mx-2">Thorium</span>
         </a>
@@ -55,7 +53,6 @@
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Include Bootstrap JS via a CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
