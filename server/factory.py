@@ -1,7 +1,7 @@
 from app.db import setup_database
-from flask import Flask
 from app.routes.api import api
 from app.routes.frontend import frontend
+from flask import Flask
 
 
 def create_app():

@@ -1,8 +1,8 @@
 from app.db import insert_exploit
 from flask import Blueprint, request, jsonify
 import os
-import threading
 import sqlite3
+import threading
 
 api = Blueprint("api", __name__)
 
@@ -20,7 +20,7 @@ def add_exploit():
         filename = os.path.basename(file.filename)
 
         # Define the upload path
-        upload_path = os.path.join('./exploits', filename)
+        upload_path = os.path.join('/exploits', filename)
 
         # Save the file to the defined path
         file.save(upload_path)

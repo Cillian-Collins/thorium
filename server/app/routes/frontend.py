@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template
 from app.db import fetch_exploits, fetch_submissions
-import threading
+from flask import Blueprint, render_template
 import sqlite3
+import threading
 
 
 frontend = Blueprint("frontend", __name__)

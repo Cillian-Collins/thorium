@@ -18,6 +18,11 @@ services:
     build:
       context: runner
     image: thorium-runner:latest
+    depends_on:
+      - server
     volumes:
       - ${EXPLOITS_DIR}:/exploits:rw
       - ${DATABASE_DIR}:/database:rw
+    environment:
+      FLAG_REGEX: ${FLAG_REGEX}
+      TICK_LENGTH_SECONDS: ${TICK_LENGTH_SECONDS}
