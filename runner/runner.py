@@ -29,5 +29,9 @@ def run(exploits, ip, extra):
                 "flag": flag,
                 "exploit": exploit
             }
+<<<<<<< HEAD
             print(f"submitting: {json.dumps(flag_obj)}")
+=======
+            # print(f"submitting: {json.dumps(flag_obj)}")
+>>>>>>> f4921f5c70458974ec2f042f527122862d3b3d56
             cache.rpush("submissions", json.dumps(flag_obj))
