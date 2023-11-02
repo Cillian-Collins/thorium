@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>Dashboard</h1>
+    <h4 class="my-0 mt-2 mb-2">Dashboard</h4>
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card">
                 <div class="card-header bg-secondary text-white">
                     <i class="fas fa-server"></i> Services
                 </div>
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card">
                 <div class="card-header bg-secondary text-white">
                     <i class="fas fa-play"></i> Runner
                 </div>
@@ -78,7 +78,7 @@
         labels: ["Active", "Inactive"],
         datasets: [{
             data: [{{ exploits[0] }}, {{ exploits[1] }}],
-            backgroundColor: ["#007bff", "#dc3545"]
+            backgroundColor: ["#28a745", "#dc3545"]
         }]
     };
 

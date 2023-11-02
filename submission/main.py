@@ -9,7 +9,7 @@ import threading
 def main():
     print("Connecting to Redis")
     # Connect to the Redis server
-    cache = redis.StrictRedis(host='redis', port=6379)
+    cache = redis.StrictRedis(host="redis", port=6379)
 
     p = connect()
 
@@ -17,15 +17,22 @@ def main():
         _, message = cache.brpop("submissions")
         flag_obj = json.loads(message.decode())
         if flag_obj:
-            flag = flag_obj['flag']
-            exploit = flag_obj['exploit']
-            status = submit(p, flag)
+            flag = flag_obj["flag"]
+            exploit = flag_obj["exploit"]
+            target = flag_obj["target"]
+            try:
+                status = submit(p, flag)
+            except:
+                status = "ERR"
+
+            if status not in ["OK", "OLD", "DUP", "INV", "OWN", "ERR"]:
+                status = "ERR"
 
             local = threading.local()
             if not hasattr(local, "conn"):
-                local.conn = sqlite3.connect('/database/database.db')
-            insert_submission(flag, status, exploit)
+                local.conn = sqlite3.connect("/database/database.db")
+            insert_submission(flag, status, target, exploit)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

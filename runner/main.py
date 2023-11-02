@@ -12,13 +12,12 @@ TICK_LENGTH_SECONDS = int(os.getenv("TICK_LENGTH_SECONDS", "60"))
 
 
 if __name__ == "__main__":
-
     while True:
         t = time.time()
         local = threading.local()
 
         if not hasattr(local, "conn"):
-            local.conn = sqlite3.connect('/database/database.db')
+            local.conn = sqlite3.connect("/database/database.db")
         items = fetch_active_exploits()
         exploits = [x[0] for x in items]
 
