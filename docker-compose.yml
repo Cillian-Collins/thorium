@@ -23,6 +23,7 @@ services:
     volumes:
       - ${EXPLOITS_DIR}:/exploits:rw
       - ${DATABASE_DIR}:/database:rw
+      - ./config/runner:/app/config:rw
     environment:
       FLAG_REGEX: ${FLAG_REGEX}
       TICK_LENGTH_SECONDS: ${TICK_LENGTH_SECONDS}
