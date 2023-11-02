@@ -44,6 +44,23 @@ def fetch_exploits():
     return items
 
 
+def fetch_exploit_name_by_id(exploit_id):
+    # Create a new database connection for this thread
+    conn = sqlite3.connect('/database/database.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM exploits WHERE id = ?", (exploit_id,))
+    items = cursor.fetchall()
+
+    # Close the cursor and connection within this thread
+    cursor.close()
+    conn.close()
+
+    if len(items) == 0 or len(items[0]) == 0:
+        return None
+
+    return items[0][0]
+
+
 def fetch_submissions():
     # Create a new database connection for this thread
     conn = sqlite3.connect('/database/database.db')

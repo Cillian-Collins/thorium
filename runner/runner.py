@@ -1,10 +1,12 @@
 import json
 import os
 import re
+import redis
 import subprocess
 
 
 FLAG_REGEX = os.getenv("FLAG_REGEX")
+cache = redis.Redis(host='redis', port=6379)
 
 
 def run(exploits, ip, extra):
@@ -16,4 +18,10 @@ def run(exploits, ip, extra):
         if result.stderr:
             print(result.stderr)
         flags = re.findall(FLAG_REGEX, result.stdout)
-        print(flags)
+        for flag in flags:
+            flag_obj = {
+                "flag": flag,
+                "exploit": exploit
+            }
+            # print(f"submitting: {json.dumps(flag_obj)}")
+            cache.rpush("submissions", json.dumps(flag_obj))
