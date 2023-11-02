@@ -3,3 +3,5 @@ shared/database/database.db
 *.pyc
 shared/exploits/*.py
 shared/stats/*.txt
+config/runner/*.py
+config/submission/*.py
