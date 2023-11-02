@@ -15,11 +15,19 @@ This will spawn the necessary containers and the application will be available o
 ### Writing Exploits
 Exploits can be uploaded directly via the Thorium server. Exploits should be a standalone Python file with the following function signature:
 ```python
-def exploit(ip, extra):
-    ...
-    print(flag)
+import json
+import os
+
+# Load target host
+target = os.getenv("TARGET")
+# Load extra data - normally requires json.loads()
+extra = json.loads(os.getenv("EXTRA"))
+# Find flags
+flags = [...]
+# Print flags to stdout
+print(flags)
 ```
-This is where `ip` is the IP address of the target and `extra` is the extra information being passed in (usually some JSON containing flag ids).
+This is where `target` is the IP address of the target and `extra` is the extra information being passed in (usually some JSON containing flag ids).
 
 Simply print the flags found and the runner will regex match valid flags from stdout and submit them.
 

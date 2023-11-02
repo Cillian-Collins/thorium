@@ -14,6 +14,7 @@ TICK_LENGTH_SECONDS = int(os.getenv("TICK_LENGTH_SECONDS", "60"))
 if __name__ == "__main__":
 
     while True:
+        t = time.time()
         local = threading.local()
 
         if not hasattr(local, "conn"):
@@ -31,4 +32,8 @@ if __name__ == "__main__":
                     future.result()
                 except Exception as e:
                     print(e)
-        time.sleep(TICK_LENGTH_SECONDS)
+        time_elapsed = time.time() - t
+        with open("/stats/time.txt", "w") as f:
+            f.write(str(time_elapsed))
+        if time_elapsed < TICK_LENGTH_SECONDS:
+            time.sleep(TICK_LENGTH_SECONDS - time_elapsed)

@@ -8,6 +8,7 @@ services:
     volumes:
       - ${EXPLOITS_DIR}:/exploits:rw
       - ${DATABASE_DIR}:/database:rw
+      - ${STATS_DIR}:/stats:ro
   redis:
     image: redis:7.2.0-alpine
     restart: unless-stopped
@@ -23,7 +24,17 @@ services:
     volumes:
       - ${EXPLOITS_DIR}:/exploits:rw
       - ${DATABASE_DIR}:/database:rw
+      - ${STATS_DIR}:/stats:rw
       - ./config/runner:/app/config:rw
     environment:
       FLAG_REGEX: ${FLAG_REGEX}
       TICK_LENGTH_SECONDS: ${TICK_LENGTH_SECONDS}
+  submission:
+    build:
+      context: submission
+    depends_on:
+      - redis
+    image: thorium-submission:latest
+    volumes:
+      - ${DATABASE_DIR}:/database:rw
+      - ./config/submission:/app/config:rw

@@ -3,6 +3,99 @@
 {% block content %}
 <div class="container">
     <h1>Dashboard</h1>
-    <!-- Add your dashboard content here -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <i class="fas fa-upload"></i> Submissions
+                </div>
+                <div class="card-body text-center">
+                    <canvas id="submissionsChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <i class="fas fa-bug"></i> Exploits
+                </div>
+                <div class="card-body text-center">
+                    <canvas id="exploitsChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <i class="fas fa-server"></i> Services
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="text-dark">{{ service_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <i class="fas fa-play"></i> Runner
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="text-dark">{{ elapsed_time }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    // Data for the Submissions pie chart
+    var submissionsData = {
+        labels: ["OK", "OLD", "DUP", "INV", "OWN", "ERR"],
+        datasets: [{
+            data: [{{ submissions[0] }}, {{ submissions[1] }}, {{ submissions[2] }}, {{ submissions[3] }}, {{ submissions[4] }}, {{ submissions[5] }}],
+            backgroundColor: ["#28a745", "#ff22ff", "#ffa500", "#dc3545", "#6610f2", "#6c757d"]
+        }]
+    };
+
+    // Get the pie chart canvas element for Submissions
+    var submissionsChartCanvas = document.getElementById("submissionsChart");
+
+    // Create the pie chart for Submissions
+    var submissionsChart = new Chart(submissionsChartCanvas, {
+        type: "doughnut",
+        data: submissionsData,
+        options: {
+            responsive: true, // Make the chart responsive
+            maintainAspectRatio: false, // Allow the chart to adjust its aspect ratio
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    // Data for the Exploits pie chart
+    var exploitsData = {
+        labels: ["Active", "Inactive"],
+        datasets: [{
+            data: [{{ exploits[0] }}, {{ exploits[1] }}],
+            backgroundColor: ["#007bff", "#dc3545"]
+        }]
+    };
+
+    // Get the pie chart canvas element for Exploits
+    var exploitsChartCanvas = document.getElementById("exploitsChart");
+
+    // Create the pie chart for Exploits
+    var exploitsChart = new Chart(exploitsChartCanvas, {
+        type: "doughnut",
+        data: exploitsData,
+        options: {
+            responsive: true, // Make the chart responsive
+            maintainAspectRatio: false, // Allow the chart to adjust its aspect ratio
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
 {% endblock %}
