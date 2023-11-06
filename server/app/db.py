@@ -19,6 +19,9 @@ def setup_database():
             "CREATE TABLE IF NOT EXISTS services (id INTEGER PRIMARY KEY, name TEXT, port INT CHECK(port "
             ">= 0 AND port <= 65535))"
         )
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS targets (id INTEGER PRIMARY KEY, host TEXT)"
+        )
 
         conn.commit()
         conn.close()
@@ -206,6 +209,30 @@ def fetch_submissions_breakdown():
         "= 'INV' THEN 1 ELSE 0 END) AS INV, SUM(CASE WHEN status = 'OWN' THEN 1 ELSE 0 END) AS OWN, "
         "SUM(CASE WHEN status = 'ERR' THEN 1 ELSE 0 END) AS ERR FROM submissions;"
     )
+    items = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return items
+
+
+def insert_targets(targets):
+    conn = sqlite3.connect("/database/database.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM targets")
+
+    cursor.executemany("INSERT INTO targets (host) VALUES (?)", [(target,) for target in targets])
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+def fetch_targets():
+    conn = sqlite3.connect("/database/database.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM targets")
     items = cursor.fetchall()
 
     cursor.close()

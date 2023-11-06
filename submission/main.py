@@ -1,9 +1,7 @@
 from config.config import connect, submit
-from db import insert_submission
-import json
+from submission import read_queue
+import concurrent.futures
 import redis
-import sqlite3
-import threading
 
 
 def main():
@@ -12,24 +10,14 @@ def main():
     p = connect()
 
     while True:
-        _, message = cache.brpop("submissions")
-        flag_obj = json.loads(message.decode())
-        if flag_obj:
-            flag = flag_obj["flag"]
-            exploit = flag_obj["exploit"]
-            target = flag_obj["target"]
-            try:
-                status = submit(p, flag)
-            except:
-                status = "ERR"
-
-            if status not in ["OK", "OLD", "DUP", "INV", "OWN", "ERR"]:
-                status = "ERR"
-
-            local = threading.local()
-            if not hasattr(local, "conn"):
-                local.conn = sqlite3.connect("/database/database.db")
-            insert_submission(flag, status, target, exploit)
+        with concurrent.futures.ThreadPoolExecutor(20) as executor:
+            futures = [executor.submit(read_queue, p, cache) for i in range(20)]
+            concurrent.futures.wait(futures)
+            for future in futures:
+                try:
+                    future.result()
+                except Exception as e:
+                    print(e)
 
 
 if __name__ == "__main__":

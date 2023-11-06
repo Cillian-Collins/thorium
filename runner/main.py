@@ -1,6 +1,6 @@
 from config.config import info
-from db import fetch_active_exploits
-from runner import run
+from db import fetch_active_exploits, fetch_targets
+from runner import run, install_exploit_dependencies
 import concurrent.futures
 import os
 import sqlite3
@@ -21,7 +21,9 @@ if __name__ == "__main__":
         items = fetch_active_exploits()
         exploits = [x[0] for x in items]
 
-        ips, extra = info()
+        install_exploit_dependencies()
+
+        ips, extra = [target[0] for target in fetch_targets()], info()
 
         with concurrent.futures.ThreadPoolExecutor(50) as executor:
             futures = [executor.submit(run, exploits, ip, extra) for ip in ips]

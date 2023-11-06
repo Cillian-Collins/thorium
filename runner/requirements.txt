@@ -1,1 +1,3 @@
 redis
+pipreqs
+requests

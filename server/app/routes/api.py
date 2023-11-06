@@ -6,6 +6,7 @@ from app.db import (
     remove_exploit,
     fetch_exploits_by_service,
     fetch_exploit_by_id,
+    insert_targets,
 )
 from flask import Blueprint, request, jsonify
 import os
@@ -45,6 +46,18 @@ def add_exploit():
             jsonify({"error": "Invalid file format. Only .py files are allowed"}),
             400,
         )
+
+
+@api.route("/targets/add", methods=["PUT"])
+def add_targets():
+    targets = request.json.get("targets")
+    local = threading.local()
+
+    if not hasattr(local, "conn"):
+        local.conn = sqlite3.connect("/database/database.db")
+
+    insert_targets(targets)
+    return jsonify({"message": "Service successfully added"}), 200
 
 
 @api.route("/services/add", methods=["POST"])

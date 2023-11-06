@@ -16,7 +16,7 @@ This will spawn the necessary containers and the application will be available o
 You should modify the `.env` file to use the correct values for the competition you are playing.
 
 ### Runner Configuration
-You must write a config file (Python) for the Runner container. This is located in `config/runner/config.py` and should define an `info()` function which returns a list of IPs to attack and extra information (usually JSON containing flag IDs).
+You must write a config file (Python) for the Runner container. This is located in `config/runner/config.py` and should define an `info()` function which returns extra information (usually JSON containing flag IDs).
 
 An example script looks like:
 ```python
@@ -26,9 +26,8 @@ import requests
 def info():
     # Send a request to teams.json and fetch the ips and extra info
     r = requests.get("http://10.10.254.254/competition/teams.json")
-    ips = r.json()['teams']
     extra = r.json()['services']
-    return ips, extra
+    return extra
 ```
 
 ### Submission Configuration
@@ -46,10 +45,17 @@ def connect():
 
 def submit(p, flag):
     resp = p.sendline(flag.encode()).decode()
-    if "OK" in resp:
+    if "invalid" in resp:
+        return "INV"
+    elif "flag is too old" in resp:
+        return "OLD"
+    elif "invalid" in resp:
+        return "OWN"
+    elif "you already submitted this flag" in resp:
+        return "DUP"
+    elif "Accepted." in resp:
         return "OK"
-    elif 
-
+    return "ERR"
 ```
 
 ### Writing Exploits

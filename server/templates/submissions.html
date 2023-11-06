@@ -25,10 +25,16 @@
                         <td>
                             {% if submission[2] == 'OK' %}
                                 <strong><span style="color: green;">{{ submission[2] }}</span></strong>
-                            {% elif submission[2] in ['DUP', 'OWN'] %}
+                            {% elif submission[2] == 'DUP' %}
                                 <strong><span style="color: orange;">{{ submission[2] }}</span></strong>
-                            {% else %}
+                            {% elif submission[2] == 'OLD' %}
+                                <strong><span style="color: hotpink;">{{ submission[2] }}</span></strong>
+                            {% elif submission[2] == 'INV' %}
                                 <strong><span style="color: red;">{{ submission[2] }}</span></strong>
+                            {% elif submission[2] == 'OWN' %}
+                                <strong><span style="color: purple;">{{ submission[2] }}</span></strong>
+                            {% else %}
+                                <strong><span style="color: grey;">{{ submission[2] }}</span></strong>
                             {% endif %}
                         </td>
                         <td>{{ submission[3] }}</td>

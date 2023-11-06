@@ -6,6 +6,7 @@ from app.db import (
     fetch_exploits_breakdown,
     fetch_submissions_breakdown,
     fetch_paginated_submissions,
+    fetch_targets,
 )
 from flask import Blueprint, render_template, abort, request
 import os
@@ -27,13 +28,15 @@ def dashboard():
 
     with open("/stats/time.txt", "r") as f:
         elapsed_time = float(f.read())
-        unit_names = ["ms", "s", "m"]
-        unit_divisors = [1000, 60, 60]
+        if elapsed_time < 1:
+            elapsed_time *= 1000
+            unit_name = "ms"
+        elif elapsed_time >= 60:
+            elapsed_time /= 60
+            unit_name = "m"
+        else:
+            unit_name = "s"
 
-        for unit_name, unit_divisor in zip(unit_names, unit_divisors):
-            if elapsed_time < unit_divisor:
-                break
-            elapsed_time /= unit_divisor
         elapsed_time = f"{elapsed_time:.2f}{unit_name}"
 
     return render_template(
@@ -56,6 +59,29 @@ def submissions():
 
     items = fetch_paginated_submissions(page, 10)
     return render_template("submissions.html", submissions=items, page=page)
+
+
+@frontend.route("/targets")
+def targets():
+    local = threading.local()
+
+    if not hasattr(local, "conn"):
+        local.conn = sqlite3.connect("/database/database.db")
+
+    items = fetch_targets()
+    return render_template("targets.html", targets=items)
+
+
+@frontend.route("/targets/add")
+def add_targets():
+    local = threading.local()
+
+    if not hasattr(local, "conn"):
+        local.conn = sqlite3.connect("/database/database.db")
+
+    items = fetch_targets()
+    items = "\n".join([item[1] for item in items])
+    return render_template("add_targets.html", targets=items)
 
 
 @frontend.route("/services")

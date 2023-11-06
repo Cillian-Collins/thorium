@@ -14,13 +14,14 @@ services:
     restart: unless-stopped
     command: [ "redis-server", "--appendonly", "yes" ]
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
   runner:
     build:
       context: runner
     image: thorium-runner:latest
     depends_on:
       - server
+    restart: unless-stopped
     volumes:
       - ${EXPLOITS_DIR}:/exploits:rw
       - ${DATABASE_DIR}:/database:rw
@@ -34,6 +35,7 @@ services:
       context: submission
     depends_on:
       - redis
+    restart: unless-stopped
     image: thorium-submission:latest
     volumes:
       - ${DATABASE_DIR}:/database:rw

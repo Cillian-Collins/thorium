@@ -3,7 +3,7 @@
 <head>
     <title>Thorium</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-python.min.js"></script>
@@ -30,9 +30,14 @@
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
                 </li>
+                <li class="nav-item {% if active_page == 'services' %}active{% endif %}">
+                    <a class="nav-link" href="/targets">
+                        <i class="fas fa-crosshairs"></i> Targets
+                    </a>
+                </li>
                 <li class="nav-item {% if active_page == 'submissions' %}active{% endif %}">
                     <a class="nav-link" href="/submissions">
-                        <i class="fas fa-file-alt"></i> Submissions
+                        <i class="fas fa-paper-plane"></i> Submissions
                     </a>
                 </li>
                 <li class="nav-item {% if active_page == 'services' %}active{% endif %}">

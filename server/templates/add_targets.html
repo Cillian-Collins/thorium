@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h4 class="my-0 mt-2 mb-2">Select Targets</h4>
+    <form id="targetForm">
+        <div class="form-group">
+            <label for="targetList">Enter a list of targets (one per line)</label>
+            <textarea class="form-control" id="targetList" name="targets" rows="5" required>{{ targets }}</textarea>
+        </div>
+        <button type="button" class="btn btn-secondary" id="selectTargetsButton">Select Targets</button>
+        <div id="errorMessage" class="text-danger mt-3" style="display: none;"></div>
+    </form>
+</div>
+
+<script>
+document.getElementById("selectTargetsButton").addEventListener("click", function() {
+    let targetList = document.getElementById("targetList");
+
+    if (targetList.value.trim() === "") {
+        document.getElementById("errorMessage").innerHTML = "Please enter at least one target.";
+        document.getElementById("errorMessage").style.display = "block";
+    } else {
+        let targetsArray = targetList.value.split('\n');
+        targetsArray = targetsArray.filter(target => target.trim() !== "");
+
+        fetch("/api/targets/add", {
+            method: "PUT",
+            body: JSON.stringify({ targets: targetsArray }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            if (response.status === 200) {
+                window.location.href = "/targets";
+            } else {
+                return response.text();
+            }
+        })
+        .then(errorMessage => {
+            if (errorMessage) {
+                document.getElementById("errorMessage").innerHTML = JSON.parse(errorMessage)['error'];
+                document.getElementById("errorMessage").style.display = "block";
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
+});
+</script>
+{% endblock %}
