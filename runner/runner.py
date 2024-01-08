@@ -13,6 +13,7 @@ def run(exploits, ip, extra):
     for exploit in exploits:
         env = os.environ.copy()
         env["TARGET"] = ip
+        env["EXTRA"] = json.dumps(extra)
         result = subprocess.run(
             ["python3", f"/exploits/{exploit}"],
             stdout=subprocess.PIPE,

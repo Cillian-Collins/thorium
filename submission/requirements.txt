@@ -1,3 +1,4 @@
 redis
 pwntools
 requests
+celery

@@ -14,11 +14,9 @@ TICK_LENGTH_SECONDS = int(os.getenv("TICK_LENGTH_SECONDS", "60"))
 
 
 if __name__ == "__main__":
-    print(123)
     app = Celery('tasks')
     app.config_from_object('celery_config')
     while True:
-        print(1)
         t = time.time()
         local = threading.local()
 
@@ -32,7 +30,6 @@ if __name__ == "__main__":
         ips, extra = [target[0] for target in fetch_targets()], info()
 
         for ip in ips:
-            print(ip)
             run_exploit_task.delay(exploits, ip, extra)
 
         time_elapsed = time.time() - t
