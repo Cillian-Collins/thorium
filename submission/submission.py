@@ -16,9 +16,14 @@ def read_queue(p, cache):
 
         if status not in ["OK", "OLD", "DUP", "INV", "OWN", "ERR"]:
             status = "ERR"
-
+        
+        if status == "ERR":
+            flag_obj["iter"] += 1
+            cache.rpush("submissions", json.dumps(flag_obj))
+            return False
         local = threading.local()
         if not hasattr(local, "conn"):
             local.conn = sqlite3.connect("/database/database.db")
-        print("Inserting", flag, status, target, exploit)
+        print([flag, status, target, exploit])
         insert_submission(flag, status, target, exploit)
+        return True

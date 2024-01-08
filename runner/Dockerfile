@@ -2,6 +2,7 @@ FROM python:3.11-slim-buster
 
 WORKDIR app
 
+ENV C_FORCE_ROOT true
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY . .
 RUN apt-get update && apt-get install -y supervisor

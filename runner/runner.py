@@ -26,7 +26,7 @@ def run(exploits, ip, extra):
         print(result.stdout)
         flags = re.findall(FLAG_REGEX, result.stdout)
         for flag in flags:
-            flag_obj = {"flag": flag, "exploit": exploit, "target": ip}
+            flag_obj = {"flag": flag, "exploit": exploit, "target": ip, "iter": 0}
             cache.rpush("submissions", json.dumps(flag_obj))
 
 
