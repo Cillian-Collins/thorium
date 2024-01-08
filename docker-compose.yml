@@ -16,11 +16,13 @@ services:
     ports:
       - "127.0.0.1:6379:6379"
   runner:
+    command: celery -A tasks worker --loglevel=info
     build:
       context: runner
     image: thorium-runner:latest
     depends_on:
       - server
+      - redis
     restart: unless-stopped
     volumes:
       - ${EXPLOITS_DIR}:/exploits:rw
