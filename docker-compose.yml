@@ -41,3 +41,6 @@ services:
     volumes:
       - ${DATABASE_DIR}:/database:rw
       - ./config/submission:/app/config:rw
+    environment:
+      BATCH_NUM_SECONDS: ${BATCH_NUM_SECONDS}
+      BATCH_NUM_TOTAL: ${BATCH_NUM_TOTAL}
