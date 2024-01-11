@@ -23,6 +23,10 @@ def setup_database():
             "CREATE TABLE IF NOT EXISTS targets (id INTEGER PRIMARY KEY, host TEXT)"
         )
 
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS disabled (id INTEGER PRIMARY KEY, host TEXT, exploit TEXT)"
+        )
+
         conn.commit()
         conn.close()
 

@@ -10,7 +10,7 @@ import threading
 import time
 
 
-TICK_LENGTH_SECONDS = int(os.getenv("TICK_LENGTH_SECONDS", "60"))
+EXPLOIT_INTERVAL_SECONDS = int(os.getenv("EXPLOIT_INTERVAL_SECONDS", "60"))
 
 
 if __name__ == "__main__":
@@ -29,11 +29,18 @@ if __name__ == "__main__":
 
         ips, extra = [target[0] for target in fetch_targets()], info()
 
+        tasks = []
+
         for ip in ips:
-            run_exploit_task.delay(exploits, ip, extra)
+            result = run_exploit_task.delay(exploits, ip, extra)
+            tasks.append(result)
+
+        # This allows us to correctly time the full run on async calls
+        for task in tasks:
+            task.get()
 
         time_elapsed = time.time() - t
         with open("/stats/time.txt", "w") as f:
             f.write(str(time_elapsed))
-        if time_elapsed < TICK_LENGTH_SECONDS:
-            time.sleep(TICK_LENGTH_SECONDS - time_elapsed)
+        if time_elapsed < EXPLOIT_INTERVAL_SECONDS:
+            time.sleep(EXPLOIT_INTERVAL_SECONDS - time_elapsed)

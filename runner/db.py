@@ -23,3 +23,14 @@ def fetch_targets():
     conn.close()
 
     return items
+
+def fetch_disabled_exploits():
+    conn = sqlite3.connect("/database/database.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT host, exploit FROM disabled")
+    items = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return items

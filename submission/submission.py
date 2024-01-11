@@ -27,3 +27,6 @@ def read_queue(p, cache):
         print([flag, status, target, exploit])
         insert_submission(flag, status, target, exploit)
         return True
+
+def check_queue(cache):
+    return cache.llen("submissions")
