@@ -7,8 +7,10 @@ from app.db import (
     fetch_exploits_by_service,
     fetch_exploit_by_id,
     insert_targets,
+    add_exploit_exclusions,
+    remove_exploit_exclusions
 )
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, redirect, url_for
 import os
 import sqlite3
 import threading
@@ -124,6 +126,22 @@ def delete_exploit(exploit_id):
 
     return jsonify({"message": "Disable parameter not set to allowed value"}), 400
 
-@api.route("/exploits/manage/<exploit_id>", methods=["POST"])
+@api.route("/exploits/manage/<exploit_id>", methods=['POST'])
 def manage_exploit(exploit_id):
-    return jsonify({"message": "idek"}), 200
+    local = threading.local()
+
+    if not hasattr(local, "conn"):
+        local.conn = sqlite3.connect("/database/database.db")
+
+    status = request.form.get('exploitStatus')
+    hosts = request.form.getlist('hosts[]')
+
+    if status == "disable":
+        add_exploit_exclusions(hosts, exploit_id)
+        return redirect(url_for("frontend.manage_exploit", exploit_id=exploit_id))
+        
+    elif status == "enable":
+        remove_exploit_exclusions(hosts, exploit_id)
+        return redirect(url_for("frontend.manage_exploit", exploit_id=exploit_id))
+        
+    return jsonify({"message": "No status provided"}), 400

@@ -7,6 +7,7 @@ from app.db import (
     fetch_submissions_breakdown,
     fetch_paginated_submissions,
     fetch_targets,
+    fetch_disabled_exploits
 )
 from flask import Blueprint, render_template, abort, request
 import os
@@ -159,4 +160,10 @@ def manage_exploit(exploit_id):
     hosts = {}
     for target in fetch_targets():
         hosts[target[1]] = True
-    return render_template("manage_exploit.html", exploit_name=exploit_name, hosts=hosts)
+    
+    print(hosts)
+
+    for exclusion in fetch_disabled_exploits(exploit_id):
+        print(exclusion)
+        hosts[exclusion[0]] = False
+    return render_template("manage_exploit.html", exploit_id=exploit_id, exploit_name=exploit_name, hosts=hosts)

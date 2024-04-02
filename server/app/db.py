@@ -24,7 +24,7 @@ def setup_database():
         )
 
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS disabled (id INTEGER PRIMARY KEY, host TEXT, exploit TEXT)"
+            "CREATE TABLE IF NOT EXISTS disabled (id INTEGER PRIMARY KEY, host TEXT, exploit_id TEXT)"
         )
 
         conn.commit()
@@ -237,6 +237,36 @@ def fetch_targets():
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM targets")
+    items = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return items
+
+
+def add_exploit_exclusions(hosts, exploit_id):
+    conn = sqlite3.connect("/database/database.db")
+    cursor = conn.cursor()
+    print(hosts, exploit_id)
+    cursor.executemany("INSERT INTO disabled (host, exploit_id) VALUES (?, ?)", [(host, exploit_id) for host in hosts])
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def remove_exploit_exclusions(hosts, exploit_id):
+    conn = sqlite3.connect("/database/database.db")
+    cursor = conn.cursor()
+    cursor.executemany("DELETE FROM disabled WHERE host = ? AND exploit_id = ?", [(host, exploit_id) for host in hosts])
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+def fetch_disabled_exploits(exploit_id):
+    conn = sqlite3.connect("/database/database.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT host, exploit_id FROM disabled WHERE exploit_id = ?", (exploit_id,))
     items = cursor.fetchall()
 
     cursor.close()
