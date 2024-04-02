@@ -160,10 +160,7 @@ def manage_exploit(exploit_id):
     hosts = {}
     for target in fetch_targets():
         hosts[target[1]] = True
-    
-    print(hosts)
 
     for exclusion in fetch_disabled_exploits(exploit_id):
-        print(exclusion)
         hosts[exclusion[0]] = False
     return render_template("manage_exploit.html", exploit_id=exploit_id, exploit_name=exploit_name, hosts=hosts)

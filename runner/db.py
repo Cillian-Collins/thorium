@@ -4,7 +4,7 @@ import sqlite3
 def fetch_active_exploits():
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM exploits WHERE active")
+    cursor.execute("SELECT id, name FROM exploits WHERE active")
     items = cursor.fetchall()
 
     cursor.close()
@@ -24,10 +24,10 @@ def fetch_targets():
 
     return items
 
-def fetch_disabled_exploits():
+def fetch_exploit_exclusions():
     conn = sqlite3.connect("/database/database.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT host, exploit FROM disabled")
+    cursor.execute("SELECT host, exploit_id FROM disabled")
     items = cursor.fetchall()
 
     cursor.close()
