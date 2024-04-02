@@ -123,3 +123,7 @@ def delete_exploit(exploit_id):
         return jsonify({"message": "Exploit successfully deleted"}), 200
 
     return jsonify({"message": "Disable parameter not set to allowed value"}), 400
+
+@api.route("/exploits/manage/<exploit_id>", methods=["POST"])
+def manage_exploit(exploit_id):
+    return jsonify({"message": "idek"}), 200

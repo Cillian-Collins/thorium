@@ -144,3 +144,19 @@ def view_exploit(exploit_id):
     return render_template(
         "view_exploit.html", exploit_name=exploit_name, exploit_content=exploit_content
     )
+
+@frontend.route("/exploits/manage/<exploit_id>")
+def manage_exploit(exploit_id):
+    local = threading.local()
+
+    if not hasattr(local, "conn"):
+        local.conn = sqlite3.connect("/database/database.db")
+
+    exploit_name = fetch_exploit_name_by_id(exploit_id)
+    if not exploit_name:
+        return abort(404)
+
+    hosts = {}
+    for target in fetch_targets():
+        hosts[target[1]] = True
+    return render_template("manage_exploit.html", exploit_name=exploit_name, hosts=hosts)

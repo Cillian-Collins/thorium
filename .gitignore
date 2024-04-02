@@ -5,3 +5,4 @@ shared/exploits/*.py
 shared/stats/*.txt
 config/runner/*.py
 config/submission/*.py
+shared/*
